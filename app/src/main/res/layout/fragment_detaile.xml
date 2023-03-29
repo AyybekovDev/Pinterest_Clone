@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.fragment.DetaileFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.jsibbold.zoomage.ZoomageView
+                android:id="@+id/iv_Detailmain"
+                android:layout_width="match_parent"
+                android:background="@color/black"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:zoomage_animateOnReset="true"
+                app:zoomage_autoCenter="true"
+                app:zoomage_autoResetMode="UNDER"
+                app:zoomage_maxScale="8"
+                app:zoomage_minScale="0.6"
+                app:zoomage_restrictBounds="false"
+                app:zoomage_translatable="true"
+                app:zoomage_zoomable="true" />
+            <ProgressBar
+                android:visibility="gone"
+                android:id="@+id/deteilprogres"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_gravity="start"
+                android:id="@+id/iv_DetailbackMain"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/back_ios"/>
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:gravity="center"
+        android:layout_weight="1.5"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="56dp"
+                android:layout_gravity="center"
+                android:id="@+id/iv_DetailImg"
+                android:background="@color/black"
+                android:layout_height="56dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/circles" />
+
+            <LinearLayout
+                android:layout_marginLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:maxLines="1"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_Detailname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_subcrides"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Подписчики"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/tv_int"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/shape"
+                android:text="Подписаться"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape"
+                android:text="Просмотрить"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:id="@+id/btnDetailsave"
+                android:background="@drawable/shapered"
+                android:text="Сохранить"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/iv_DetailShare"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:src="@drawable/share" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,130 @@
+<html>
+<head>
+<title>DetaileFragment.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+DetaileFragment.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.pinterestclone.ui.fragment</span>
+
+
+<span class="s1">import android.content.Intent</span>
+<span class="s1">import android.graphics.Color</span>
+<span class="s1">import android.os.Bundle</span>
+<span class="s1">import android.view.View</span>
+<span class="s1">import android.widget.ImageView</span>
+<span class="s1">import android.widget.ProgressBar</span>
+<span class="s1">import android.widget.TextView</span>
+<span class="s1">import android.widget.Toast</span>
+<span class="s1">import androidx.activity.OnBackPressedCallback</span>
+<span class="s1">import androidx.fragment.app.Fragment</span>
+<span class="s1">import androidx.navigation.fragment.findNavController</span>
+<span class="s1">import androidx.navigation.fragment.navArgs</span>
+<span class="s1">import com.bumptech.glide.Glide</span>
+<span class="s1">import com.example.pinterestclone.R</span>
+<span class="s1">import com.example.pinterestclone.data.remote.ApiClient</span>
+<span class="s1">import com.example.pinterestclone.model.SaveImage</span>
+<span class="s1">import com.example.pinterestclone.model.search.OnePeople</span>
+<span class="s1">import com.example.pinterestclone.repository.ImageRepository</span>
+<span class="s1">import com.example.pinterestclone.utils.hide</span>
+<span class="s1">import com.example.pinterestclone.utils.show</span>
+<span class="s1">import com.jsibbold.zoomage.ZoomageView</span>
+<span class="s1">import retrofit2.Call</span>
+<span class="s1">import retrofit2.Callback</span>
+<span class="s1">import retrofit2.Response</span>
+
+<span class="s0">class </span><span class="s1">DetaileFragment : Fragment(R.layout.fragment_detaile) {</span>
+    <span class="s1">lateinit </span><span class="s0">var </span><span class="s1">list: ArrayList&lt;OnePeople&gt;</span>
+    <span class="s1">lateinit </span><span class="s0">var </span><span class="s1">repository: ImageRepository</span>
+    <span class="s1">private </span><span class="s0">val </span><span class="s1">args: DetaileFragmentArgs by navArgs()</span>
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onViewCreated(view: View</span><span class="s0">, </span><span class="s1">savedInstanceState: Bundle?) {</span>
+        <span class="s0">super</span><span class="s1">.onViewCreated(view</span><span class="s0">, </span><span class="s1">savedInstanceState)</span>
+        <span class="s0">val </span><span class="s1">callback=</span><span class="s0">object</span><span class="s1">:OnBackPressedCallback(</span><span class="s0">true</span><span class="s1">){</span>
+            <span class="s1">override </span><span class="s0">fun </span><span class="s1">handleOnBackPressed() {</span>
+                <span class="s0">val </span><span class="s1">main=args.main</span>
+                <span class="s0">if </span><span class="s1">(main==</span><span class="s2">&quot;main&quot;</span><span class="s1">){</span>
+                    <span class="s1">findNavController().navigate(R.id.action_detaileFragment_to_mainFragment)</span>
+                <span class="s1">}</span>
+                <span class="s0">if </span><span class="s1">(main==</span><span class="s2">&quot;save&quot;</span><span class="s1">){</span>
+                    <span class="s1">findNavController().navigate(R.id.action_detaileFragment_to_saveFragment)</span>
+                <span class="s1">}</span>
+                <span class="s0">if </span><span class="s1">(main==</span><span class="s2">&quot;search&quot;</span><span class="s1">){</span>
+                    <span class="s1">findNavController().navigate(R.id.action_detaileFragment_to_searchFragment)</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s1">requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner</span><span class="s0">,</span><span class="s1">callback)</span>
+        <span class="s1">setupUI(view)</span>
+    <span class="s1">}</span>
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">setupUI(view: View) {</span>
+        <span class="s0">val </span><span class="s1">iv_Detailback = view.findViewById&lt;ImageView&gt;(R.id.iv_DetailbackMain)</span>
+        <span class="s0">val </span><span class="s1">btnDetailsave = view.findViewById&lt;TextView&gt;(R.id.btnDetailsave)</span>
+        <span class="s0">val </span><span class="s1">id = args.id</span>
+        <span class="s0">val </span><span class="s1">main=args.main</span>
+        <span class="s1">repository = ImageRepository(requireActivity().application)</span>
+        <span class="s1">iv_Detailback.setOnClickListener {</span>
+            <span class="s0">if </span><span class="s1">(main==</span><span class="s2">&quot;main&quot;</span><span class="s1">){</span>
+                <span class="s1">findNavController().navigate(R.id.action_detaileFragment_to_mainFragment)</span>
+            <span class="s1">}</span>
+            <span class="s0">if </span><span class="s1">(main==</span><span class="s2">&quot;save&quot;</span><span class="s1">){</span>
+                <span class="s1">findNavController().navigate(R.id.action_detaileFragment_to_saveFragment)</span>
+            <span class="s1">}</span>
+            <span class="s0">if </span><span class="s1">(main==</span><span class="s2">&quot;search&quot;</span><span class="s1">){</span>
+                <span class="s1">findNavController().navigate(R.id.action_detaileFragment_to_searchFragment)</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s1">btnDetailsave.setOnClickListener {</span>
+            <span class="s1">repository.saveImage(SaveImage(url = id))</span>
+            <span class="s1">Toast.makeText(requireContext()</span><span class="s0">, </span><span class="s2">&quot;Rasm saqlandi&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span>
+            <span class="s1">btnDetailsave.text = </span><span class="s2">&quot;Сохранено&quot;</span>
+            <span class="s1">btnDetailsave.setTextColor(Color.BLACK)</span>
+            <span class="s1">btnDetailsave.setBackgroundColor(Color.WHITE)</span>
+        <span class="s1">}</span>
+        <span class="s1">loadImage(id</span><span class="s0">, </span><span class="s1">view)</span>
+    <span class="s1">}</span>
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">loadImage(id: String</span><span class="s0">, </span><span class="s1">view: View) {</span>
+        <span class="s0">val </span><span class="s1">loading = view?.findViewById&lt;ProgressBar&gt;(R.id.deteilprogres)</span>
+        <span class="s1">loading?.show()</span>
+        <span class="s0">val </span><span class="s1">ivDetailmain = view.findViewById&lt;ZoomageView&gt;(R.id.iv_Detailmain)</span>
+        <span class="s0">val </span><span class="s1">ivDetailImg = view.findViewById&lt;ImageView&gt;(R.id.iv_DetailImg)</span>
+        <span class="s0">val </span><span class="s1">ivDetailShare = view.findViewById&lt;ImageView&gt;(R.id.iv_DetailShare)</span>
+        <span class="s0">val </span><span class="s1">tvDetailname = view.findViewById&lt;TextView&gt;(R.id.tv_Detailname)</span>
+        <span class="s0">val </span><span class="s1">tvInt = view.findViewById&lt;TextView&gt;(R.id.tv_int)</span>
+        <span class="s1">ApiClient.apiService.getImageById(id).enqueue(</span><span class="s0">object </span><span class="s1">: Callback&lt;OnePeople&gt; {</span>
+            <span class="s1">override </span><span class="s0">fun </span><span class="s1">onResponse(call: Call&lt;OnePeople&gt;</span><span class="s0">, </span><span class="s1">response: Response&lt;OnePeople&gt;) {</span>
+                <span class="s0">if </span><span class="s1">(response.isSuccessful) {</span>
+                    <span class="s1">Glide.with(ivDetailmain).load(response.body()!!.urls.full)</span>
+                        <span class="s1">.placeholder(R.drawable.loading)</span>
+                        <span class="s1">.into(ivDetailmain)</span>
+                    <span class="s1">Glide.with(ivDetailImg).load(response.body()!!.urls.small)</span>
+                        <span class="s1">.placeholder(R.drawable.loading)</span>
+                        <span class="s1">.into(ivDetailImg)</span>
+                    <span class="s1">tvDetailname.text = response.body()!!.user.name</span>
+                    <span class="s1">tvInt.text = response.body()!!.user.total_likes.toString()</span>
+                    <span class="s1">ivDetailShare.setOnClickListener {</span>
+                        <span class="s0">val </span><span class="s1">intent = Intent(Intent.ACTION_SEND)</span>
+                        <span class="s1">intent.type = </span><span class="s2">&quot;text/plain&quot;</span>
+                        <span class="s1">intent.putExtra(Intent.EXTRA_TEXT</span><span class="s0">, </span><span class="s1">response.body()!!.links.download)</span>
+                        <span class="s1">startActivity(intent)</span>
+                    <span class="s1">}</span>
+                    <span class="s1">loading?.hide()</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+            <span class="s1">override </span><span class="s0">fun </span><span class="s1">onFailure(call: Call&lt;OnePeople&gt;</span><span class="s0">, </span><span class="s1">t: Throwable) {</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span>
+    <span class="s1">}</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>
